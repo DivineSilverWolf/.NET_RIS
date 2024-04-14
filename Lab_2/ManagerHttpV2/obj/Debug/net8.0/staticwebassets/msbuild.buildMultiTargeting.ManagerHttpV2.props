@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ManagerHttpV2.props" />
+</Project>

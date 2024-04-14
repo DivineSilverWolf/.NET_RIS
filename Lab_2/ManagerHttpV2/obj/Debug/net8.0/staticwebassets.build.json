@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "pAcNIxygVqfqldM6QpKsvmWLhmGuCWiLNj1HKCqZE3I=",
+  "Source": "ManagerHttpV2",
+  "BasePath": "_content/ManagerHttpV2",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

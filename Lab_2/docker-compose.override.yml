@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  managerhttpv2:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8084
+      - ASPNETCORE_HTTPS_PORTS=8085
+    ports:
+      - "8084:8084"
+      - "8085:8085"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  workerhttpv2_1:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8086
+      - ASPNETCORE_HTTPS_PORTS=8087
+    ports:
+      - "8086:8086"
+      - "8087:8087"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  workerhttpv2_2:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8088
+      - ASPNETCORE_HTTPS_PORTS=8089
+    ports:
+      - "8088:8088"
+      - "8089:8089"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+  rabbitmq:
+    environment:
+        RABBITMQ_DEFAULT_USER: quest
+        RABBITMQ_DEFAULT_PASS: quest
+        RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbit log_levels [{connection,error},{default,error}] disk_free_limit 2147483648
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672    

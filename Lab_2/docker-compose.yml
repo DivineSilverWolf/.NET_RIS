@@ -1,0 +1,89 @@
+version: '3.4'
+
+services:
+  managerhttpv2:
+    image: ${DOCKER_REGISTRY-}managerhttpv2
+    build:
+      context: .
+      dockerfile: ManagerHttpV2/Dockerfile
+    restart: always
+    networks:
+      - network1
+
+  workerhttpv2_1:
+    image: ${DOCKER_REGISTRY-}workerhttpv2
+    build:
+      context: .
+      dockerfile: WorkerHttpV2/Dockerfile
+    restart: always
+    networks:
+      - network1
+
+  workerhttpv2_2:
+    image: ${DOCKER_REGISTRY-}workerhttpv2
+    build:
+      context: .
+      dockerfile: WorkerHttpV2/Dockerfile
+    restart: always
+    networks:
+      - network1
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq'
+    hostname: rabbitmq
+    restart: always
+    networks:
+      - network1
+  mongodb1:
+    image: mongo:latest
+    container_name: mongodb1
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27017"]
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongodb1:27017',priority:1},{_id:1,host:'mongodb2:27018',priority:0.5},{_id:2,host:'mongodb3:27019',priority:0.5}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 20s
+      retries: 20
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb1_data:/data/db
+      - mongodb1_config:/data/configdb
+    networks:
+      - network1
+  mongodb2:
+    image: mongo:latest
+    container_name: mongodb2
+    command: ["--replSet", "rs0", "--bind_ip_all", "--port", "27018"]
+    ports:
+      - "27018:27018"
+    volumes:
+      - "mongodb2_data:/data/db"
+      - "mongodb2_config:/data/configdb"
+    networks:
+      - network1
+
+  mongodb3:
+    image: mongo:latest
+    container_name: mongodb3
+    command: [ "--replSet", "rs0", "--bind_ip_all", "--port", "27019" ]
+    ports:
+      - "27019:27019"
+    volumes:
+      - "mongodb3_data:/data/db"
+      - "mongodb3_config:/data/configdb"
+    networks:
+      - network1
+volumes:
+  mongodb1_data:
+  mongodb1_config:
+  mongodb2_data:
+  mongodb2_config:
+  mongodb3_data:
+  mongodb3_config:
+
+networks:
+  network1:
+    driver: bridge
+  cluster_network:
+

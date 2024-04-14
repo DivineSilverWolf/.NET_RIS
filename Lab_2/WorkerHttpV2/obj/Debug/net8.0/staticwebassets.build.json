@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1cKd855TwQaVpzDIgAC5GUh/NchcaTwNVdvW+F6Tpbk=",
+  "Source": "WorkerHttpV2",
+  "BasePath": "_content/WorkerHttpV2",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

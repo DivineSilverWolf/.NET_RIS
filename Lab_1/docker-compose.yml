@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  managerhttp:
+    image: ${DOCKER_REGISTRY-}managerhttp
+    build:
+      context: .
+      dockerfile: ManagerHttp/Dockerfile
+
+  workerhttp:
+    image: ${DOCKER_REGISTRY-}workerhttp
+    build:
+      context: .
+      dockerfile: WorkerHttp/Dockerfile
+
